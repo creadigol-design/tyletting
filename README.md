@@ -7,14 +7,15 @@ Both mock-ups are single, self-contained HTML files — open them directly in a 
 Brand: Rokkitt (slab serif, all roles) with olive-gold `#CDC053` as the primary
 brand colour on slate/olive neutrals.
 
-Photography is represented by placeholders; real property photos drop straight in.
-To wire them up, commit the photos to `images/` on this branch using these names:
+Real property photos are embedded directly in both HTML files (as data URIs, so
+each mock-up stays a single self-contained file). The source photos also live in
+`images/` as optimised WebP:
 
-- `images/26-college-road.jpg`
-- `images/23-ffriddoedd-road.jpg`
-- `images/20-belmont-drive.jpg`
-- `images/17-snowdon-view.jpg`
-- `images/5-penllys-terrace.jpg`
+- `images/26-college-road.webp`
+- `images/23-ffriddoedd-road.webp`
+- `images/20-belmont-drive.webp`
+- `images/17-snowdon-view.webp`
+- `images/5-penllys-terrace.webp`
 
 Featured properties (current portfolio, excluding 4 College Road, 2 & 3 St James Drive,
 44 Garth Road / Bosuns Cottage, and 4 Penllys Terrace):
