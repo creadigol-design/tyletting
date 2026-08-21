@@ -1,0 +1,572 @@
+<title>Tŷ Lettings Full Revamp</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Figtree:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+  :root{
+    --slate-950:#1b1e25;
+    --slate-900:#23262e;
+    --slate-800:#2f3440;
+    --slate-100:#e6e5e0;
+    --paper:#f7f6f3;
+    --card:#ffffff;
+    --ink:#23262e;
+    --body-c:#4c5160;
+    --muted:#7b8090;
+    --line:#dedcd5;
+    --gorse:#f2b32e;
+    --gorse-deep:#d99a14;
+    --teal:#2e7d74;
+    --teal-deep:#1f5f58;
+    --display:"Bricolage Grotesque","Arial Black",system-ui,sans-serif;
+    --text:"Figtree",system-ui,sans-serif;
+    --mono:"IBM Plex Mono",ui-monospace,monospace;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{font-family:var(--text);background:var(--paper);color:var(--body-c);font-size:17px;line-height:1.65}
+  h1,h2,h3{font-family:var(--display);color:var(--ink);line-height:1.05;text-wrap:balance;letter-spacing:-.02em}
+  .wrap{max-width:1140px;margin:0 auto;padding:0 26px}
+  .eyebrow{
+    font-family:var(--mono);font-size:.75rem;text-transform:uppercase;
+    letter-spacing:.14em;color:var(--teal);margin-bottom:16px;
+    display:flex;align-items:center;gap:10px;
+  }
+  .eyebrow::before{content:"";width:26px;height:2px;background:var(--gorse)}
+  .btn{
+    display:inline-flex;align-items:center;gap:10px;
+    font-family:var(--display);font-weight:700;font-size:1rem;
+    background:var(--gorse);color:var(--slate-950);text-decoration:none;
+    padding:14px 26px;border-radius:999px;border:none;cursor:pointer;
+    transition:transform .15s ease,background .15s ease;
+  }
+  .btn:hover{background:var(--gorse-deep);transform:translateY(-1px)}
+  .btn.dark{background:var(--slate-900);color:var(--paper)}
+  .btn.dark:hover{background:var(--slate-800)}
+  .btn.line{background:transparent;color:var(--paper);border:1.5px solid rgba(247,246,243,.4)}
+  .btn.line:hover{border-color:var(--gorse);color:var(--gorse);background:transparent}
+  a:focus-visible,button:focus-visible,summary:focus-visible{outline:2px solid var(--gorse);outline-offset:3px}
+
+  /* ---------- nav ---------- */
+  header{position:sticky;top:0;z-index:20;background:rgba(27,30,37,.92);backdrop-filter:blur(8px);border-bottom:1px solid rgba(247,246,243,.08)}
+  .nav{display:flex;align-items:center;justify-content:space-between;height:72px}
+  .wordmark{font-family:var(--display);font-weight:800;font-size:1.6rem;color:var(--paper);text-decoration:none;letter-spacing:-.03em}
+  .wordmark em{font-style:normal;color:var(--gorse)}
+  .nav ul{display:flex;gap:30px;list-style:none;align-items:center}
+  .nav ul a{color:var(--slate-100);text-decoration:none;font-weight:500;font-size:.95rem}
+  .nav ul a:hover{color:var(--gorse)}
+  .lang{
+    font-family:var(--mono);font-size:.75rem;letter-spacing:.08em;
+    display:flex;border:1px solid rgba(247,246,243,.25);border-radius:999px;overflow:hidden;
+  }
+  .lang button{
+    font:inherit;color:var(--slate-100);background:none;border:none;
+    padding:6px 13px;cursor:pointer;
+  }
+  .lang button[aria-pressed="true"]{background:var(--gorse);color:var(--slate-950);font-weight:500}
+
+  /* ---------- hero ---------- */
+  .hero{background:var(--slate-900);color:var(--slate-100);position:relative;overflow:hidden}
+  .hero::after{ /* faint ridgeline */
+    content:"";position:absolute;inset:auto 0 0 0;height:34%;pointer-events:none;
+    background:
+      linear-gradient(to top, rgba(27,30,37,.55), transparent 70%),
+      url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 200" preserveAspectRatio="none"><path d="M0 200V150L120 90l90 40 140-80 110 55 90-30 130 65 120-70 100 50 90-25 110 55 90-40v90z" fill="%232f3440"/></svg>') bottom/100% 100% no-repeat;
+  }
+  .hero .wrap{position:relative;z-index:1;padding:96px 26px 150px;display:grid;grid-template-columns:1.15fr .85fr;gap:60px;align-items:center}
+  .hero .eyebrow{color:var(--gorse)}
+  .hero h1{color:var(--paper);font-size:clamp(2.6rem,5.4vw,4.2rem);font-weight:800;margin-bottom:22px}
+  .hero h1 .ty{color:var(--gorse);white-space:nowrap}
+  .hero p.lede{max-width:50ch;font-size:1.1rem;color:#c3c6cf;margin-bottom:34px}
+  .hero-cta{display:flex;gap:16px;flex-wrap:wrap;align-items:center}
+  .stats{display:flex;gap:0;margin-top:52px;border-top:1px solid rgba(247,246,243,.14)}
+  .stats div{padding:20px 34px 0 0;margin-right:34px}
+  .stats div:not(:last-child){border-right:1px solid rgba(247,246,243,.14)}
+  .stats b{font-family:var(--display);font-weight:800;font-size:1.9rem;color:var(--paper);display:block;font-variant-numeric:tabular-nums}
+  .stats span{font-family:var(--mono);font-size:.72rem;text-transform:uppercase;letter-spacing:.12em;color:var(--muted)}
+
+  /* roof mark */
+  .roofmark{display:flex;flex-direction:column;align-items:center;gap:18px;text-align:center}
+  .roofmark svg{width:min(300px,100%);height:auto}
+  .roofmark figcaption{font-family:var(--mono);font-size:.75rem;letter-spacing:.1em;color:var(--muted);max-width:30ch}
+  .roofmark figcaption b{color:var(--gorse);font-weight:500}
+
+  /* ---------- section scaffolding ---------- */
+  section{padding:96px 0}
+  .sec-head{display:flex;justify-content:space-between;align-items:flex-end;gap:32px;margin-bottom:52px;flex-wrap:wrap}
+  .sec-head h2{font-size:clamp(1.9rem,3.4vw,2.6rem);font-weight:800;max-width:22ch}
+  .sec-head p{max-width:44ch}
+
+  .reveal{opacity:0;transform:translateY(22px);transition:opacity .6s ease,transform .6s ease}
+  .reveal.in{opacity:1;transform:none}
+  @media (prefers-reduced-motion: reduce){
+    html{scroll-behavior:auto}
+    .reveal{opacity:1;transform:none;transition:none}
+    .btn{transition:none}
+  }
+
+  /* ---------- properties ---------- */
+  .filters{display:flex;gap:10px;flex-wrap:wrap}
+  .filters button{
+    font-family:var(--mono);font-size:.8rem;letter-spacing:.05em;
+    background:transparent;border:1.5px solid var(--line);color:var(--body-c);
+    border-radius:999px;padding:8px 18px;cursor:pointer;
+  }
+  .filters button:hover{border-color:var(--teal);color:var(--teal)}
+  .filters button[aria-pressed="true"]{background:var(--slate-900);border-color:var(--slate-900);color:var(--gorse)}
+  .props{display:grid;grid-template-columns:repeat(3,1fr);gap:28px}
+  .prop{
+    background:var(--card);border:1px solid var(--line);border-radius:18px;overflow:hidden;
+    display:flex;flex-direction:column;transition:transform .18s ease,box-shadow .18s ease;
+  }
+  .prop:hover{transform:translateY(-4px);box-shadow:0 16px 34px rgba(35,38,46,.12)}
+  .prop.hide{display:none}
+  .prop-photo{aspect-ratio:16/10;position:relative;display:flex;align-items:center;justify-content:center}
+  .prop-photo svg.house{width:44%;height:auto;opacity:.9}
+  .ph-a{background:linear-gradient(150deg,#5a6274,#3a3f4d)}
+  .ph-b{background:linear-gradient(150deg,#3f7d74,#27564f)}
+  .ph-c{background:linear-gradient(150deg,#c99a3c,#8f6a1d)}
+  .ph-d{background:linear-gradient(150deg,#7a8496,#4c5568)}
+  .ph-e{background:linear-gradient(150deg,#4f8d84,#33655e)}
+  .prop-photo .ph-tag{
+    position:absolute;bottom:12px;left:14px;background:rgba(27,30,37,.72);color:var(--slate-100);
+    font-family:var(--mono);font-size:.68rem;letter-spacing:.08em;padding:4px 10px;border-radius:6px;
+  }
+  .prop-photo .beds-tag{
+    position:absolute;top:12px;right:12px;background:var(--gorse);color:var(--slate-950);
+    font-family:var(--display);font-weight:700;font-size:.8rem;padding:5px 12px;border-radius:999px;
+  }
+  .prop-body{padding:22px 24px 26px;display:flex;flex-direction:column;gap:12px;flex:1}
+  .prop h3{font-size:1.25rem;font-weight:700}
+  .amenities{display:flex;gap:8px;flex-wrap:wrap}
+  .amenities span{
+    font-family:var(--mono);font-size:.68rem;letter-spacing:.04em;
+    background:var(--paper);border:1px solid var(--line);border-radius:6px;padding:4px 9px;color:var(--body-c);
+  }
+  .prop p.desc{font-size:.95rem;flex:1}
+  .prop-foot{display:flex;justify-content:space-between;align-items:center;border-top:1px solid var(--line);padding-top:16px}
+  .prop-foot a{font-family:var(--display);font-weight:700;font-size:.92rem;color:var(--teal-deep);text-decoration:none}
+  .prop-foot a:hover{color:var(--gorse-deep)}
+  .tour{font-family:var(--mono);font-size:.7rem;color:var(--muted);display:flex;align-items:center;gap:6px}
+
+  /* ---------- to bach story ---------- */
+  .story{background:var(--slate-900);color:#c3c6cf}
+  .story .wrap{display:grid;grid-template-columns:.9fr 1.1fr;gap:64px;align-items:center}
+  .story h2{color:var(--paper);font-size:clamp(1.9rem,3.2vw,2.5rem);font-weight:800;margin-bottom:20px}
+  .story .eyebrow{color:var(--gorse)}
+  .story p{max-width:52ch}
+  .story p + p{margin-top:16px}
+  .story em{font-style:normal;color:var(--gorse)}
+  .glyph{font-family:var(--display);font-weight:800;font-size:clamp(7rem,16vw,12rem);color:var(--paper);line-height:.9;text-align:center}
+  .glyph small{display:block;font-family:var(--mono);font-weight:400;font-size:.8rem;letter-spacing:.14em;color:var(--muted);margin-top:18px;text-transform:uppercase}
+  .glyph .hat{color:var(--gorse)}
+
+  /* ---------- steps ---------- */
+  .steps{display:grid;grid-template-columns:repeat(4,1fr);gap:26px;counter-reset:step}
+  .step{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:28px 26px;position:relative}
+  .step::before{
+    counter-increment:step;content:counter(step,decimal-leading-zero);
+    font-family:var(--mono);font-size:.75rem;letter-spacing:.1em;color:var(--gorse-deep);
+    display:block;margin-bottom:18px;
+  }
+  .step h3{font-size:1.1rem;margin-bottom:10px}
+  .step p{font-size:.93rem}
+
+  /* ---------- area ---------- */
+  .area{background:var(--card);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+  .area .wrap{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center}
+  .area-map{
+    border-radius:18px;aspect-ratio:1/1;position:relative;overflow:hidden;
+    background:linear-gradient(160deg,#2f3440,#1b1e25);
+  }
+  .area-map svg{position:absolute;inset:0;width:100%;height:100%}
+  .area-list{list-style:none;display:flex;flex-direction:column;gap:0;margin-top:30px}
+  .area-list li{display:flex;justify-content:space-between;gap:20px;padding:15px 2px;border-bottom:1px solid var(--line);font-size:.98rem}
+  .area-list li:first-child{border-top:1px solid var(--line)}
+  .area-list b{color:var(--ink);font-weight:600}
+  .area-list span{font-family:var(--mono);font-size:.78rem;color:var(--teal-deep);white-space:nowrap}
+
+  /* ---------- quotes ---------- */
+  .quotes{display:grid;grid-template-columns:repeat(3,1fr);gap:28px}
+  .quote{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:30px 28px;display:flex;flex-direction:column;gap:18px}
+  .quote .stars{color:var(--gorse-deep);letter-spacing:3px;font-size:.9rem}
+  .quote blockquote{font-size:1rem;color:var(--ink);font-weight:500}
+  .quote cite{font-style:normal;font-family:var(--mono);font-size:.75rem;color:var(--muted)}
+
+  /* ---------- faq ---------- */
+  .faq{max-width:760px;margin:0 auto}
+  .faq details{border-bottom:1px solid var(--line)}
+  .faq details:first-of-type{border-top:1px solid var(--line)}
+  .faq summary{
+    font-family:var(--display);font-weight:700;font-size:1.05rem;color:var(--ink);
+    padding:20px 36px 20px 2px;cursor:pointer;list-style:none;position:relative;
+  }
+  .faq summary::-webkit-details-marker{display:none}
+  .faq summary::after{
+    content:"+";position:absolute;right:6px;top:50%;transform:translateY(-50%);
+    font-family:var(--mono);color:var(--gorse-deep);font-size:1.2rem;
+  }
+  .faq details[open] summary::after{content:"–"}
+  .faq details p{padding:0 2px 22px;max-width:62ch}
+
+  /* ---------- CTA + footer ---------- */
+  .cta{background:var(--slate-900);position:relative;overflow:hidden}
+  .cta .wrap{position:relative;z-index:1;text-align:center;padding-top:20px;padding-bottom:20px}
+  .cta h2{color:var(--paper);font-size:clamp(2rem,4vw,3rem);font-weight:800;margin-bottom:16px}
+  .cta p{color:#c3c6cf;max-width:46ch;margin:0 auto 34px}
+  .cta .contact-row{display:flex;gap:28px;justify-content:center;flex-wrap:wrap;margin-top:34px;font-family:var(--mono);font-size:.85rem;color:var(--slate-100)}
+  .cta .contact-row a{color:var(--gorse);text-decoration:none}
+  footer{background:var(--slate-950);color:var(--muted);padding:40px 0;font-size:.88rem}
+  footer .wrap{display:flex;justify-content:space-between;align-items:center;gap:22px;flex-wrap:wrap}
+  footer .wordmark{font-size:1.25rem}
+  footer nav{display:flex;gap:22px}
+  footer nav a{color:var(--slate-100);text-decoration:none}
+  footer nav a:hover{color:var(--gorse)}
+
+  @media (max-width:920px){
+    .hero .wrap,.story .wrap,.area .wrap{grid-template-columns:1fr;gap:44px;padding-top:64px;padding-bottom:96px}
+    .props,.quotes{grid-template-columns:1fr;max-width:480px;margin:0 auto}
+    .steps{grid-template-columns:1fr 1fr}
+    .nav ul li:not(.keep){display:none}
+    .stats{flex-wrap:wrap}
+    section{padding:64px 0}
+    .roofmark{order:-1}
+  }
+  @media (max-width:560px){.steps{grid-template-columns:1fr}}
+</style>
+
+<header>
+  <nav class="nav wrap" aria-label="Main">
+    <a class="wordmark" href="#top">t<em>ŷ</em> lettings</a>
+    <ul>
+      <li><a href="#homes" data-en="Our homes" data-cy="Ein cartrefi">Our homes</a></li>
+      <li><a href="#how" data-en="How it works" data-cy="Sut mae'n gweithio">How it works</a></li>
+      <li><a href="#area" data-en="The area" data-cy="Yr ardal">The area</a></li>
+      <li><a href="#contact" data-en="Contact" data-cy="Cysylltu">Contact</a></li>
+      <li class="keep">
+        <div class="lang" role="group" aria-label="Language / Iaith">
+          <button type="button" aria-pressed="true" data-lang="en">EN</button>
+          <button type="button" aria-pressed="false" data-lang="cy">CY</button>
+        </div>
+      </li>
+    </ul>
+  </nav>
+</header>
+
+<div class="hero" id="top">
+  <div class="wrap">
+    <div>
+      <p class="eyebrow" data-en="Student homes · Bangor Uchaf" data-cy="Cartrefi myfyrwyr · Bangor Uchaf">Student homes · Bangor Uchaf</p>
+      <h1><span data-en="Your home from home in" data-cy="Eich cartref oddi cartref yn">Your home from home in</span> <span class="ty">Upper Bangor</span></h1>
+      <p class="lede" data-en="Modernised, characterful student houses minutes from Bangor University — let and looked after by local people who know every house by name. Rent Smart Wales accredited." data-cy="Tai myfyrwyr cymeriadol, wedi'u moderneiddio, funudau o Brifysgol Bangor — wedi'u gosod a'u gofalu gan bobl leol. Achrededig gan Rhentu Doeth Cymru.">Modernised, characterful student houses minutes from Bangor University — let and looked after by local people who know every house by name. Rent Smart Wales accredited.</p>
+      <div class="hero-cta">
+        <a class="btn" href="#homes" data-en="Find your house" data-cy="Dewch o hyd i'ch tŷ">Find your house</a>
+        <a class="btn line" href="#contact" data-en="Book a viewing" data-cy="Trefnu ymweliad">Book a viewing</a>
+      </div>
+      <div class="stats">
+        <div><b>3–8</b><span data-en="bedroom houses" data-cy="ystafelloedd gwely">bedroom houses</span></div>
+        <div><b>&lt;10</b><span data-en="min walk to uni" data-cy="munud i'r brifysgol">min walk to uni</span></div>
+        <div><b>7+</b><span data-en="years letting locally" data-cy="mlynedd yn gosod yn lleol">years letting locally</span></div>
+      </div>
+    </div>
+    <figure class="roofmark" aria-label="The tŷ lettings roof mark">
+      <svg viewBox="0 0 300 220" fill="none" aria-hidden="true">
+        <path d="M40 120 150 40l110 80" stroke="#f2b32e" stroke-width="14" stroke-linecap="round" stroke-linejoin="round"/>
+        <text x="150" y="196" text-anchor="middle" font-family="Bricolage Grotesque, sans-serif" font-weight="800" font-size="120" fill="#f7f6f3">t&#375;</text>
+      </svg>
+      <figcaption><b>tŷ</b> — Welsh for house. The accent is called a <b>to bach</b>: a little roof.</figcaption>
+    </figure>
+  </div>
+</div>
+
+<section id="homes">
+  <div class="wrap">
+    <div class="sec-head">
+      <div>
+        <p class="eyebrow" data-en="Our homes" data-cy="Ein cartrefi">Our homes</p>
+        <h2 data-en="Five houses, all in the heart of Upper Bangor" data-cy="Pum tŷ, pob un yng nghanol Bangor Uchaf">Five houses, all in the heart of Upper Bangor</h2>
+      </div>
+      <div class="filters" role="group" aria-label="Filter by bedrooms">
+        <button type="button" aria-pressed="true" data-beds="all">All</button>
+        <button type="button" aria-pressed="false" data-beds="3">3 bed</button>
+        <button type="button" aria-pressed="false" data-beds="4">4 bed</button>
+        <button type="button" aria-pressed="false" data-beds="5">5 bed</button>
+        <button type="button" aria-pressed="false" data-beds="8">8 bed</button>
+      </div>
+    </div>
+    <div class="props">
+      <article class="prop reveal" data-beds="8">
+        <div class="prop-photo ph-a" role="img" aria-label="Photo placeholder: 26 College Road">
+          <svg class="house" viewBox="0 0 120 90" fill="none" stroke="#f7f6f3" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 45 60 15l40 30"/><path d="M30 42v33h60V42"/><path d="M52 75V55h16v20"/><rect x="38" y="50" width="9" height="9"/><rect x="73" y="50" width="9" height="9"/></svg>
+          <span class="ph-tag">PHOTO / GALLERY</span><span class="beds-tag">8 bed</span>
+        </div>
+        <div class="prop-body">
+          <h3>26 College Road</h3>
+          <div class="amenities"><span>5 en suites</span><span>3 floors</span><span>Parking</span></div>
+          <p class="desc">A huge, recently refurbished house over three levels. Most bedrooms have their own bathroom — ideal for a big group who want space without sharing showers.</p>
+          <div class="prop-foot">
+            <a href="#contact" data-en="Book a viewing →" data-cy="Trefnu ymweliad →">Book a viewing →</a>
+            <span class="tour">▶ 360° tour</span>
+          </div>
+        </div>
+      </article>
+      <article class="prop reveal" data-beds="5">
+        <div class="prop-photo ph-b" role="img" aria-label="Photo placeholder: 23 Ffriddoedd Road">
+          <svg class="house" viewBox="0 0 120 90" fill="none" stroke="#f7f6f3" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 45 60 15l40 30"/><path d="M30 42v33h60V42"/><path d="M52 75V55h16v20"/><rect x="38" y="50" width="9" height="9"/><rect x="73" y="50" width="9" height="9"/></svg>
+          <span class="ph-tag">PHOTO / GALLERY</span><span class="beds-tag">5 bed</span>
+        </div>
+        <div class="prop-body">
+          <h3>23 Ffriddoedd Road</h3>
+          <div class="amenities"><span>2 bathrooms</span><span>Study room</span><span>BBQ terrace</span><span>Gardener</span></div>
+          <p class="desc">Five bedrooms plus a bonus study/laundry room, two bathrooms, and a garden with a barbecue terrace — with a gardener all year round.</p>
+          <div class="prop-foot">
+            <a href="#contact" data-en="Book a viewing →" data-cy="Trefnu ymweliad →">Book a viewing →</a>
+            <span class="tour">▶ 360° tour</span>
+          </div>
+        </div>
+      </article>
+      <article class="prop reveal" data-beds="4">
+        <div class="prop-photo ph-c" role="img" aria-label="Photo placeholder: 20 Belmont Drive">
+          <svg class="house" viewBox="0 0 120 90" fill="none" stroke="#f7f6f3" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 45 60 15l40 30"/><path d="M30 42v33h60V42"/><path d="M52 75V55h16v20"/><rect x="38" y="50" width="9" height="9"/><rect x="73" y="50" width="9" height="9"/></svg>
+          <span class="ph-tag">PHOTO / GALLERY</span><span class="beds-tag">4 bed</span>
+        </div>
+        <div class="prop-body">
+          <h3>20 Belmont Drive</h3>
+          <div class="amenities"><span>Off-road parking</span><span>Garage</span><span>Garden</span></div>
+          <p class="desc">Tucked just off Upper Bangor with off-road parking, a garage for bikes and surfboards, and a great little garden to the rear.</p>
+          <div class="prop-foot">
+            <a href="#contact" data-en="Book a viewing →" data-cy="Trefnu ymweliad →">Book a viewing →</a>
+            <span class="tour">▶ 360° tour</span>
+          </div>
+        </div>
+      </article>
+      <article class="prop reveal" data-beds="4">
+        <div class="prop-photo ph-d" role="img" aria-label="Photo placeholder: 17 Snowdon View">
+          <svg class="house" viewBox="0 0 120 90" fill="none" stroke="#f7f6f3" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 45 60 15l40 30"/><path d="M30 42v33h60V42"/><path d="M52 75V55h16v20"/><rect x="38" y="50" width="9" height="9"/><rect x="73" y="50" width="9" height="9"/></svg>
+          <span class="ph-tag">PHOTO / GALLERY</span><span class="beds-tag">4 bed</span>
+        </div>
+        <div class="prop-body">
+          <h3>17 Snowdon View</h3>
+          <div class="amenities"><span>Character home</span><span>Big garden</span><span>Central</span></div>
+          <p class="desc">A traditional, characterful house right in the heart of Upper Bangor, with an extensive back garden for summer term.</p>
+          <div class="prop-foot">
+            <a href="#contact" data-en="Book a viewing →" data-cy="Trefnu ymweliad →">Book a viewing →</a>
+            <span class="tour">▶ 360° tour</span>
+          </div>
+        </div>
+      </article>
+      <article class="prop reveal" data-beds="3">
+        <div class="prop-photo ph-e" role="img" aria-label="Photo placeholder: 5 Penllys Terrace">
+          <svg class="house" viewBox="0 0 120 90" fill="none" stroke="#f7f6f3" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 45 60 15l40 30"/><path d="M30 42v33h60V42"/><path d="M52 75V55h16v20"/><rect x="38" y="50" width="9" height="9"/><rect x="73" y="50" width="9" height="9"/></svg>
+          <span class="ph-tag">PHOTO / GALLERY</span><span class="beds-tag">3 bed</span>
+        </div>
+        <div class="prop-body">
+          <h3>5 Penllys Terrace</h3>
+          <div class="amenities"><span>Sun terrace ×2</span><span>Terraced</span><span>Central</span></div>
+          <p class="desc">A characterful terrace in the heart of Upper Bangor with a cosy lounge and sun terraces to both front and rear.</p>
+          <div class="prop-foot">
+            <a href="#contact" data-en="Book a viewing →" data-cy="Trefnu ymweliad →">Book a viewing →</a>
+            <span class="tour">▶ 360° tour</span>
+          </div>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="story">
+  <div class="wrap">
+    <div class="glyph reveal" aria-hidden="true">t<span class="hat">ŷ</span><small>/ tee / — house</small></div>
+    <div class="reveal">
+      <p class="eyebrow" data-en="Why “tŷ”?" data-cy="Pam “tŷ”?">Why “tŷ”?</p>
+      <h2 data-en="A little roof over every letter" data-cy="To bach dros bob llythyren">A little roof over every letter</h2>
+      <p><em>Tŷ</em> is the Welsh word for house — and in Welsh, the accent over the ŷ is called a <em>to bach</em>: literally, a little roof. We liked that. It's what we do — we put good roofs over students' heads, and we sweat the little things underneath them.</p>
+      <p data-en="We're not a chain and we're not a call centre. We're local, Rent Smart Wales accredited, and every house we let is one we'd be happy to live in ourselves." data-cy="Nid cadwyn ydyn ni, ac nid canolfan alwadau chwaith. Rydyn ni'n lleol, wedi'n hachredu gan Rhentu Doeth Cymru, a byddem yn hapus i fyw ym mhob tŷ rydym yn ei osod.">We're not a chain and we're not a call centre. We're local, Rent Smart Wales accredited, and every house we let is one we'd be happy to live in ourselves.</p>
+    </div>
+  </div>
+</section>
+
+<section id="how">
+  <div class="wrap">
+    <div class="sec-head">
+      <div>
+        <p class="eyebrow" data-en="How it works" data-cy="Sut mae'n gweithio">How it works</p>
+        <h2 data-en="From group chat to front-door keys" data-cy="O'r sgwrs grŵp i allweddi'r drws ffrynt">From group chat to front-door keys</h2>
+      </div>
+    </div>
+    <div class="steps">
+      <div class="step reveal">
+        <h3 data-en="Get your group together" data-cy="Casglwch eich grŵp">Get your group together</h3>
+        <p data-en="Houses go from 3 to 8 bedrooms. Not a full group yet? Tell us — we can often match people up." data-cy="Mae'r tai rhwng 3 ac 8 ystafell wely. Dim grŵp llawn eto? Dywedwch wrthym.">Houses go from 3 to 8 bedrooms. Not a full group yet? Tell us — we can often match people up.</p>
+      </div>
+      <div class="step reveal">
+        <h3 data-en="Book a viewing" data-cy="Trefnwch ymweliad">Book a viewing</h3>
+        <p data-en="Message us on WhatsApp or use the form. We'll show you round in person or on a video call, same week." data-cy="Anfonwch neges WhatsApp neu defnyddiwch y ffurflen. Byddwn yn eich tywys o gwmpas yr wythnos honno.">Message us on WhatsApp or use the form. We'll show you round in person or on a video call, same week.</p>
+      </div>
+      <div class="step reveal">
+        <h3 data-en="Sign online" data-cy="Llofnodwch ar-lein">Sign online</h3>
+        <p data-en="Contracts, guarantor forms and deposits are all handled digitally — no printing, no chasing housemates." data-cy="Mae cytundebau, ffurflenni gwarantwr a blaendaliadau i gyd yn ddigidol.">Contracts, guarantor forms and deposits are all handled digitally — no printing, no chasing housemates.</p>
+      </div>
+      <div class="step reveal">
+        <h3 data-en="Move in &amp; settle" data-cy="Symudwch i mewn">Move in &amp; settle</h3>
+        <p data-en="Keys, a walkthrough, and one number to call for anything that ever needs fixing. That's it." data-cy="Allweddi, taith gerdded, ac un rhif i'w ffonio am unrhyw beth sydd angen ei drwsio.">Keys, a walkthrough, and one number to call for anything that ever needs fixing. That's it.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="area" id="area">
+  <div class="wrap">
+    <div class="area-map reveal" role="img" aria-label="Stylised map placeholder of Upper Bangor showing tŷ lettings houses near the university">
+      <svg viewBox="0 0 400 400" fill="none" aria-hidden="true">
+        <path d="M-20 300 C80 260 140 320 220 280 S360 240 420 270" stroke="#4c5568" stroke-width="26" stroke-linecap="round"/>
+        <path d="M60 -20 C90 80 70 180 120 260 S150 360 140 420" stroke="#3a3f4d" stroke-width="14"/>
+        <path d="M230 -20 C210 90 260 160 240 250 S250 350 270 420" stroke="#3a3f4d" stroke-width="14"/>
+        <path d="M-20 150 C90 130 200 170 300 140 S400 120 420 130" stroke="#3a3f4d" stroke-width="10"/>
+        <circle cx="205" cy="170" r="34" fill="#2e7d74"/>
+        <text x="205" y="176" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="13" fill="#f7f6f3">UNI</text>
+        <g fill="#f2b32e">
+          <path d="M120 120 l10 8 v12 h-20 v-12 z"/>
+          <path d="M275 110 l10 8 v12 h-20 v-12 z"/>
+          <path d="M130 235 l10 8 v12 h-20 v-12 z"/>
+          <path d="M255 250 l10 8 v12 h-20 v-12 z"/>
+          <path d="M180 300 l10 8 v12 h-20 v-12 z"/>
+        </g>
+        <text x="20" y="382" font-family="IBM Plex Mono, monospace" font-size="11" fill="#7b8090">ILLUSTRATIVE MAP — HOUSES ▲ / UNIVERSITY ●</text>
+      </svg>
+    </div>
+    <div class="reveal">
+      <p class="eyebrow" data-en="The area" data-cy="Yr ardal">The area</p>
+      <h2 data-en="Everything is a walk away" data-cy="Mae popeth o fewn tro">Everything is a walk away</h2>
+      <p data-en="Upper Bangor is the student quarter: between the Ffriddoedd halls, Main Arts and the high street, with Eryri on one side and the Menai Strait on the other." data-cy="Bangor Uchaf yw ardal y myfyrwyr: rhwng neuaddau Ffriddoedd, y Prif Adeilad a'r stryd fawr, gydag Eryri ar un ochr a'r Fenai ar y llall.">Upper Bangor is the student quarter: between the Ffriddoedd halls, Main Arts and the high street, with Eryri on one side and the Menai Strait on the other.</p>
+      <ul class="area-list">
+        <li><b>Bangor University (Main Arts)</b><span>4–9 min walk</span></li>
+        <li><b>Ffriddoedd student village</b><span>2–6 min walk</span></li>
+        <li><b>Upper Bangor shops &amp; cafés</b><span>1–4 min walk</span></li>
+        <li><b>Bangor train station</b><span>12 min walk</span></li>
+        <li><b>Menai Strait &amp; pier</b><span>15 min walk</span></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="sec-head">
+      <div>
+        <p class="eyebrow" data-en="Tenants on tŷ" data-cy="Barn ein tenantiaid">Tenants on tŷ</p>
+        <h2 data-en="Don't take our word for it" data-cy="Peidiwch â chymryd ein gair ni">Don't take our word for it</h2>
+      </div>
+    </div>
+    <div class="quotes">
+      <div class="quote reveal">
+        <span class="stars" aria-label="5 out of 5 stars">★★★★★</span>
+        <blockquote>“Anything that broke was fixed within a couple of days. Compared to what our friends dealt with, it wasn't close.”</blockquote>
+        <cite>— Final-year tenant, Ffriddoedd Road</cite>
+      </div>
+      <div class="quote reveal">
+        <span class="stars" aria-label="5 out of 5 stars">★★★★★</span>
+        <blockquote>“The house actually looked like the photos. Viewing to signed contract took our group about a week.”</blockquote>
+        <cite>— Second-year group of 5</cite>
+      </div>
+      <div class="quote reveal">
+        <span class="stars" aria-label="5 out of 5 stars">★★★★★</span>
+        <blockquote>“You message one number and a real person replies. As a parent and guarantor, that mattered a lot to me.”</blockquote>
+        <cite>— Parent &amp; guarantor</cite>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section style="padding-top:0">
+  <div class="wrap">
+    <div class="sec-head" style="margin-bottom:36px">
+      <div>
+        <p class="eyebrow" data-en="Good to know" data-cy="Gwerth gwybod">Good to know</p>
+        <h2 data-en="Questions students actually ask" data-cy="Cwestiynau go iawn gan fyfyrwyr">Questions students actually ask</h2>
+      </div>
+    </div>
+    <div class="faq">
+      <details>
+        <summary>When should we start looking for next year?</summary>
+        <p>In Bangor, most groups sort their house between November and February for the following September. The bigger houses go first — if you're a group of 6+, message us early in the autumn term.</p>
+      </details>
+      <details>
+        <summary>Are bills included?</summary>
+        <p>It varies by house — each listing states exactly what's included. Where bills aren't included, we'll give you honest, realistic estimates from previous tenants rather than best-case numbers.</p>
+      </details>
+      <details>
+        <summary>Do we all need guarantors?</summary>
+        <p>Usually each tenant provides a UK-based guarantor. If that's difficult — for example for international students — talk to us and we'll work out an alternative such as advance payment options.</p>
+      </details>
+      <details>
+        <summary>What happens when something breaks?</summary>
+        <p>Message the same number you've always used — 07557 871 220. Urgent problems (heating, water, security) are dealt with as emergencies; everything else is usually sorted within a few days.</p>
+      </details>
+      <details>
+        <summary>Are you accredited?</summary>
+        <p>Yes — TY Lettings Ltd is registered and accredited with Rent Smart Wales, the statutory licensing scheme for landlords and agents in Wales. Your deposit is protected in a government-approved scheme.</p>
+      </details>
+    </div>
+  </div>
+</section>
+
+<section class="cta" id="contact">
+  <div class="wrap reveal">
+    <p class="eyebrow" style="justify-content:center" data-en="Book a viewing" data-cy="Trefnu ymweliad">Book a viewing</p>
+    <h2 data-en="Seen a house you like?" data-cy="Wedi gweld tŷ rydych chi'n ei hoffi?">Seen a house you like?</h2>
+    <p data-en="Tell us which house and how many of you there are — we'll reply the same day with viewing times, in person or over video." data-cy="Dywedwch pa dŷ a faint ohonoch sydd — byddwn yn ateb yr un diwrnod gydag amseroedd ymweld.">Tell us which house and how many of you there are — we'll reply the same day with viewing times, in person or over video.</p>
+    <a class="btn" href="#" onclick="return false" data-en="Message us on WhatsApp" data-cy="Anfonwch neges WhatsApp">Message us on WhatsApp</a>
+    <div class="contact-row">
+      <span>☎ <a href="#" onclick="return false">07557 871 220</a></span>
+      <span>✉ <a href="#" onclick="return false">hello@tylettings.com</a></span>
+      <span data-en="⌂ Upper Bangor, Gwynedd" data-cy="⌂ Bangor Uchaf, Gwynedd">⌂ Upper Bangor, Gwynedd</span>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <a class="wordmark" href="#top">t<em>ŷ</em> lettings</a>
+    <nav aria-label="Footer">
+      <a href="#homes" data-en="Our homes" data-cy="Ein cartrefi">Our homes</a>
+      <a href="#how" data-en="How it works" data-cy="Sut mae'n gweithio">How it works</a>
+      <a href="#contact" data-en="Contact" data-cy="Cysylltu">Contact</a>
+    </nav>
+    <p>© 2026 TY Lettings Ltd · Rent Smart Wales · Rhentu Doeth Cymru</p>
+  </div>
+</footer>
+
+<script>
+  // Bedroom filter
+  const filterBtns = document.querySelectorAll('.filters button');
+  filterBtns.forEach(btn => btn.addEventListener('click', () => {
+    filterBtns.forEach(b => b.setAttribute('aria-pressed', b === btn ? 'true' : 'false'));
+    const beds = btn.dataset.beds;
+    document.querySelectorAll('.prop').forEach(p => {
+      p.classList.toggle('hide', beds !== 'all' && p.dataset.beds !== beds);
+    });
+  }));
+
+  // EN / CY language toggle (demo strings)
+  const langBtns = document.querySelectorAll('.lang button');
+  langBtns.forEach(btn => btn.addEventListener('click', () => {
+    langBtns.forEach(b => b.setAttribute('aria-pressed', b === btn ? 'true' : 'false'));
+    const lang = btn.dataset.lang;
+    document.querySelectorAll('[data-en]').forEach(el => {
+      const t = el.dataset[lang];
+      if (t) el.innerHTML = t;
+    });
+    document.documentElement.lang = lang;
+  }));
+
+  // Scroll reveals
+  const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (reduced || !('IntersectionObserver' in window)) {
+    document.querySelectorAll('.reveal').forEach(el => el.classList.add('in'));
+  } else {
+    const io = new IntersectionObserver(entries => entries.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+    }), { threshold: 0.15 });
+    document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+  }
+</script>

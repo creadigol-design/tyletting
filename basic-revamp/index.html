@@ -1,0 +1,350 @@
+<title>Tŷ Lettings Basic Revamp</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700&family=Karla:wght@400;500;700&display=swap">
+<style>
+  :root{
+    --ink:#1e2b29;
+    --body:#43544f;
+    --muted:#68807a;
+    --green:#17635a;
+    --green-dark:#0f4a43;
+    --mist:#edf3f1;
+    --line:#d8e2df;
+    --paper:#ffffff;
+    --gold:#c99a3c;
+    --radius:6px;
+    --display:"Archivo",system-ui,sans-serif;
+    --text:"Karla",Verdana,sans-serif;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  @media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}}
+  body{
+    font-family:var(--text);
+    color:var(--body);
+    background:var(--paper);
+    font-size:17px;
+    line-height:1.6;
+  }
+  h1,h2,h3{font-family:var(--display);color:var(--ink);line-height:1.15;text-wrap:balance}
+  a{color:var(--green)}
+  img,svg{max-width:100%}
+
+  .wrap{max-width:1080px;margin:0 auto;padding:0 24px}
+
+  /* ---------- header ---------- */
+  header{
+    position:sticky;top:0;z-index:10;
+    background:rgba(255,255,255,.94);
+    border-bottom:1px solid var(--line);
+    backdrop-filter:blur(6px);
+  }
+  .nav{display:flex;align-items:center;justify-content:space-between;height:68px}
+  .logo{font-family:var(--display);font-weight:700;font-size:1.5rem;color:var(--ink);text-decoration:none;letter-spacing:-.02em}
+  .logo span{color:var(--green)}
+  .nav-links{display:flex;gap:28px;list-style:none;align-items:center}
+  .nav-links a{color:var(--ink);text-decoration:none;font-weight:500;font-size:.95rem}
+  .nav-links a:hover{color:var(--green)}
+  .nav-links a:focus-visible,.btn:focus-visible{outline:2px solid var(--green);outline-offset:3px}
+  .btn{
+    display:inline-block;background:var(--green);color:#fff;text-decoration:none;
+    font-family:var(--display);font-weight:600;font-size:.95rem;
+    padding:11px 22px;border-radius:var(--radius);border:none;cursor:pointer;
+  }
+  .btn:hover{background:var(--green-dark)}
+  .btn.ghost{background:transparent;color:var(--green);border:1px solid var(--green)}
+  .btn.ghost:hover{background:var(--mist)}
+
+  /* ---------- hero ---------- */
+  .hero{background:var(--mist);border-bottom:1px solid var(--line)}
+  .hero .wrap{
+    display:grid;grid-template-columns:1.05fr .95fr;gap:56px;
+    align-items:center;padding-top:72px;padding-bottom:72px;
+  }
+  .kicker{
+    font-family:var(--display);font-weight:600;font-size:.8rem;
+    text-transform:uppercase;letter-spacing:.12em;color:var(--green);
+    margin-bottom:14px;
+  }
+  .hero h1{font-size:2.9rem;font-weight:700;letter-spacing:-.02em;margin-bottom:18px}
+  .hero p{max-width:46ch;margin-bottom:28px}
+  .hero-actions{display:flex;gap:14px;flex-wrap:wrap}
+  .hero-note{margin-top:22px;font-size:.9rem;color:var(--muted)}
+  .hero-note strong{color:var(--body)}
+
+  .photo{
+    border-radius:var(--radius);
+    border:1px solid var(--line);
+    aspect-ratio:4/3;
+    display:flex;align-items:center;justify-content:center;
+    position:relative;overflow:hidden;
+    background:linear-gradient(160deg,#cfe0db 0%,#9fbfb7 60%,#7ea69c 100%);
+  }
+  .photo svg{width:52%;height:auto;opacity:.85}
+  .photo .tag{
+    position:absolute;bottom:12px;left:12px;
+    background:rgba(255,255,255,.9);color:var(--body);
+    font-size:.75rem;font-weight:500;padding:4px 10px;border-radius:4px;
+  }
+
+  /* ---------- sections ---------- */
+  section{padding:80px 0}
+  .section-head{max-width:60ch;margin-bottom:44px}
+  .section-head h2{font-size:2rem;letter-spacing:-.015em;margin-bottom:12px}
+
+  /* trust strip */
+  .strip{background:var(--green);color:#fff;padding:22px 0}
+  .strip .wrap{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap}
+  .strip div{font-family:var(--display);font-weight:600;font-size:.95rem;display:flex;align-items:center;gap:10px}
+  .strip svg{flex:none}
+
+  /* ---------- properties ---------- */
+  .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:26px}
+  .card{
+    border:1px solid var(--line);border-radius:var(--radius);
+    overflow:hidden;background:var(--paper);
+    display:flex;flex-direction:column;
+    transition:box-shadow .18s ease;
+  }
+  .card:hover{box-shadow:0 6px 22px rgba(30,43,41,.1)}
+  .card .photo{border:none;border-radius:0;aspect-ratio:16/10;border-bottom:1px solid var(--line)}
+  .card-body{padding:20px 22px 24px;display:flex;flex-direction:column;gap:10px;flex:1}
+  .card h3{font-size:1.15rem;font-weight:600}
+  .card .meta{display:flex;gap:14px;font-size:.85rem;color:var(--muted);font-weight:500}
+  .card p{font-size:.95rem;flex:1}
+  .card a{font-family:var(--display);font-weight:600;font-size:.9rem;text-decoration:none}
+  .card a:hover{text-decoration:underline}
+  .beds{
+    display:inline-block;background:var(--mist);color:var(--green-dark);
+    font-family:var(--display);font-weight:600;font-size:.78rem;
+    padding:3px 10px;border-radius:99px;align-self:flex-start;
+  }
+
+  /* ---------- why us ---------- */
+  .why{background:var(--mist);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+  .why-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:26px}
+  .why-item{background:var(--paper);border:1px solid var(--line);border-radius:var(--radius);padding:26px}
+  .why-item h3{font-size:1.05rem;margin:14px 0 8px}
+  .why-item p{font-size:.95rem}
+  .why-item .icon{
+    width:42px;height:42px;border-radius:var(--radius);
+    background:var(--green);color:#fff;
+    display:flex;align-items:center;justify-content:center;
+  }
+
+  /* ---------- contact ---------- */
+  .contact .wrap{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:start}
+  .contact-list{list-style:none;display:flex;flex-direction:column;gap:16px;margin-top:26px}
+  .contact-list li{display:flex;gap:14px;align-items:center;font-weight:500;color:var(--ink)}
+  .contact-list .icon{width:38px;height:38px;flex:none;border-radius:var(--radius);background:var(--mist);color:var(--green);display:flex;align-items:center;justify-content:center}
+  form{display:flex;flex-direction:column;gap:14px}
+  label{font-family:var(--display);font-weight:600;font-size:.85rem;color:var(--ink)}
+  input,textarea{
+    font-family:var(--text);font-size:.95rem;color:var(--ink);
+    border:1px solid var(--line);border-radius:var(--radius);
+    padding:11px 13px;background:var(--paper);width:100%;
+  }
+  input:focus,textarea:focus{outline:2px solid var(--green);outline-offset:1px;border-color:var(--green)}
+  .field{display:flex;flex-direction:column;gap:6px}
+  .field-row{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+
+  /* ---------- footer ---------- */
+  footer{background:var(--ink);color:#b9c8c4;padding:36px 0;font-size:.9rem}
+  footer .wrap{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;align-items:center}
+  footer .logo{color:#fff;font-size:1.2rem}
+  footer .logo span{color:#8fd0c6}
+
+  @media (max-width:840px){
+    .hero .wrap,.contact .wrap{grid-template-columns:1fr;gap:36px}
+    .grid,.why-grid{grid-template-columns:1fr;max-width:460px;margin:0 auto}
+    .nav-links li:not(:last-child){display:none}
+    .hero h1{font-size:2.2rem}
+    section{padding:56px 0}
+  }
+</style>
+
+<header>
+  <nav class="nav wrap" aria-label="Main">
+    <a class="logo" href="#top">tŷ<span> lettings</span></a>
+    <ul class="nav-links">
+      <li><a href="#properties">Our properties</a></li>
+      <li><a href="#why">Why tŷ</a></li>
+      <li><a href="#contact">Contact</a></li>
+      <li><a class="btn" href="#properties">View houses</a></li>
+    </ul>
+  </nav>
+</header>
+
+<div class="hero" id="top">
+  <div class="wrap">
+    <div>
+      <p class="kicker">Student homes · Upper Bangor</p>
+      <h1>Stylish, comfortable student houses in the heart of Upper Bangor</h1>
+      <p>We're a small, local letting agency specialising in modernised and characterful homes, all a short walk from Bangor University. Accredited by Rent Smart Wales, looked after by people who know every house personally.</p>
+      <div class="hero-actions">
+        <a class="btn" href="#properties">Browse our houses</a>
+        <a class="btn ghost" href="#contact">Book a viewing</a>
+      </div>
+      <p class="hero-note">Call or WhatsApp us on <strong>07557 871 220</strong> — we reply the same day.</p>
+    </div>
+    <div class="photo" role="img" aria-label="Photo placeholder: a tŷ lettings property exterior">
+      <svg viewBox="0 0 120 90" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M20 45 60 15l40 30"/><path d="M30 42v33h60V42"/>
+        <path d="M52 75V55h16v20"/><rect x="38" y="50" width="9" height="9"/><rect x="73" y="50" width="9" height="9"/>
+      </svg>
+      <span class="tag">Photo — property exterior</span>
+    </div>
+  </div>
+</div>
+
+<div class="strip">
+  <div class="wrap">
+    <div><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Rent Smart Wales accredited</div>
+    <div><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>All houses in Upper Bangor</div>
+    <div><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Local, independent &amp; family run</div>
+    <div><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Fast, friendly maintenance</div>
+  </div>
+</div>
+
+<section id="properties">
+  <div class="wrap">
+    <div class="section-head">
+      <p class="kicker">Our properties</p>
+      <h2>Find your home for next year</h2>
+      <p>Every house is modernised, well looked after and within walking distance of the university. Group sizes from 3 to 8.</p>
+    </div>
+    <div class="grid">
+      <article class="card">
+        <div class="photo" role="img" aria-label="Photo placeholder: 26 College Road">
+          <svg viewBox="0 0 120 90" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 45 60 15l40 30"/><path d="M30 42v33h60V42"/><path d="M52 75V55h16v20"/><rect x="38" y="50" width="9" height="9"/><rect x="73" y="50" width="9" height="9"/></svg>
+          <span class="tag">Photo</span>
+        </div>
+        <div class="card-body">
+          <span class="beds">8 bedrooms</span>
+          <h3>26 College Road</h3>
+          <p class="meta"><span>Upper Bangor</span><span>En&nbsp;suites</span><span>3 floors</span></p>
+          <p>A big, recently refurbished house over three levels — ideal for a large group who want space and their own bathrooms.</p>
+          <a href="#contact">Book a viewing →</a>
+        </div>
+      </article>
+      <article class="card">
+        <div class="photo" role="img" aria-label="Photo placeholder: 23 Ffriddoedd Road">
+          <svg viewBox="0 0 120 90" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 45 60 15l40 30"/><path d="M30 42v33h60V42"/><path d="M52 75V55h16v20"/><rect x="38" y="50" width="9" height="9"/><rect x="73" y="50" width="9" height="9"/></svg>
+          <span class="tag">Photo</span>
+        </div>
+        <div class="card-body">
+          <span class="beds">5 bedrooms</span>
+          <h3>23 Ffriddoedd Road</h3>
+          <p class="meta"><span>Upper Bangor</span><span>2 bathrooms</span><span>Garden</span></p>
+          <p>Five bedrooms plus a handy study/laundry room, two bathrooms, and a garden with a barbecue terrace — gardener included.</p>
+          <a href="#contact">Book a viewing →</a>
+        </div>
+      </article>
+      <article class="card">
+        <div class="photo" role="img" aria-label="Photo placeholder: 20 Belmont Drive">
+          <svg viewBox="0 0 120 90" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 45 60 15l40 30"/><path d="M30 42v33h60V42"/><path d="M52 75V55h16v20"/><rect x="38" y="50" width="9" height="9"/><rect x="73" y="50" width="9" height="9"/></svg>
+          <span class="tag">Photo</span>
+        </div>
+        <div class="card-body">
+          <span class="beds">4 bedrooms</span>
+          <h3>20 Belmont Drive</h3>
+          <p class="meta"><span>Upper Bangor</span><span>Parking</span><span>Garage</span></p>
+          <p>Close to everything with off-road parking, an extra garage for bikes and kit, and a great little garden to the rear.</p>
+          <a href="#contact">Book a viewing →</a>
+        </div>
+      </article>
+      <article class="card">
+        <div class="photo" role="img" aria-label="Photo placeholder: 17 Snowdon View">
+          <svg viewBox="0 0 120 90" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 45 60 15l40 30"/><path d="M30 42v33h60V42"/><path d="M52 75V55h16v20"/><rect x="38" y="50" width="9" height="9"/><rect x="73" y="50" width="9" height="9"/></svg>
+          <span class="tag">Photo</span>
+        </div>
+        <div class="card-body">
+          <span class="beds">4 bedrooms</span>
+          <h3>17 Snowdon View</h3>
+          <p class="meta"><span>Upper Bangor</span><span>Character</span><span>Big garden</span></p>
+          <p>A traditional, characterful house right in the heart of Upper Bangor with an extensive back garden.</p>
+          <a href="#contact">Book a viewing →</a>
+        </div>
+      </article>
+      <article class="card">
+        <div class="photo" role="img" aria-label="Photo placeholder: 5 Penllys Terrace">
+          <svg viewBox="0 0 120 90" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 45 60 15l40 30"/><path d="M30 42v33h60V42"/><path d="M52 75V55h16v20"/><rect x="38" y="50" width="9" height="9"/><rect x="73" y="50" width="9" height="9"/></svg>
+          <span class="tag">Photo</span>
+        </div>
+        <div class="card-body">
+          <span class="beds">3 bedrooms</span>
+          <h3>5 Penllys Terrace</h3>
+          <p class="meta"><span>Upper Bangor</span><span>Sun terraces</span></p>
+          <p>A characterful terrace in the heart of Upper Bangor with a lounge and sun terraces to both front and rear.</p>
+          <a href="#contact">Book a viewing →</a>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="why" id="why">
+  <div class="wrap">
+    <div class="section-head">
+      <p class="kicker">Why tŷ lettings</p>
+      <h2>Small agency, big difference</h2>
+    </div>
+    <div class="why-grid">
+      <div class="why-item">
+        <div class="icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-7-5.2-7-11a7 7 0 0 1 14 0c0 5.8-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg></div>
+        <h3>Upper Bangor specialists</h3>
+        <p>Every one of our houses is minutes from the Ffriddoedd site and the university. No long walks, no guesswork about the area.</p>
+      </div>
+      <div class="why-item">
+        <div class="icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2 3 7v6c0 5 4 8 9 9 5-1 9-4 9-9V7z"/><path d="m9 12 2 2 4-4"/></svg></div>
+        <h3>Accredited &amp; accountable</h3>
+        <p>We're registered and accredited with Rent Smart Wales, so your tenancy is handled properly from day one.</p>
+      </div>
+      <div class="why-item">
+        <div class="icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a4 4 0 0 1-4 4H8l-5 3V7a4 4 0 0 1 4-4h10a4 4 0 0 1 4 4z"/></svg></div>
+        <h3>One number, real people</h3>
+        <p>No call centres. Message us on 07557 871 220 and you'll get the people who actually manage your house.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="contact" id="contact">
+  <div class="wrap">
+    <div>
+      <p class="kicker">Get in touch</p>
+      <h2 style="font-size:2rem;letter-spacing:-.015em;margin-bottom:12px">Book a viewing</h2>
+      <p>Tell us which house you'd like to see and roughly how big your group is — we'll come back to you the same day with viewing times.</p>
+      <ul class="contact-list">
+        <li>
+          <span class="icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3 19.5 19.5 0 0 1-6-6 19.8 19.8 0 0 1-3-8.7A2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 2 .7 2.9a2 2 0 0 1-.5 2.1L8.1 10a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.9.5 2.9.7a2 2 0 0 1 1.6 2z"/></svg></span>
+          07557 871 220
+        </li>
+        <li>
+          <span class="icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 6L2 7"/></svg></span>
+          hello@tylettings.com
+        </li>
+        <li>
+          <span class="icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-7-5.2-7-11a7 7 0 0 1 14 0c0 5.8-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg></span>
+          Upper Bangor, Gwynedd
+        </li>
+      </ul>
+    </div>
+    <form aria-label="Booking enquiry (mock-up — not wired up)" onsubmit="return false">
+      <div class="field-row">
+        <div class="field"><label for="name">Your name</label><input id="name" type="text" placeholder="Elin Jones"></div>
+        <div class="field"><label for="phone">Phone or email</label><input id="phone" type="text" placeholder="07### ### ###"></div>
+      </div>
+      <div class="field"><label for="house">Which house?</label><input id="house" type="text" placeholder="e.g. 23 Ffriddoedd Road"></div>
+      <div class="field"><label for="msg">Message</label><textarea id="msg" rows="4" placeholder="We're a group of 5 looking for September…"></textarea></div>
+      <button class="btn" type="submit">Send enquiry</button>
+    </form>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <a class="logo" href="#top">tŷ<span> lettings</span></a>
+    <p>© 2026 TY Lettings Ltd · Rent Smart Wales accredited · Upper Bangor, Gwynedd</p>
+  </div>
+</footer>
