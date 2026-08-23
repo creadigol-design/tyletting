@@ -62,7 +62,7 @@ A complete redesign with a new brand identity and richer functionality:
   - 2027/28 property-alerts email capture and a sticky mobile action bar
     (WhatsApp / book a viewing)
 - Filterable property grid (by number of bedrooms) with amenity chips
-- Brand story, student "how it works" journey, area guide with illustrated map,
+- Student "how it works" journey, area guide with illustrated map,
   testimonials, and a real-questions FAQ
 - Scroll animations and hover micro-interactions (respecting reduced-motion)
 - Prominent WhatsApp / same-day-reply contact flow

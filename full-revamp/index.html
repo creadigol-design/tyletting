@@ -217,18 +217,6 @@
   }
   .mobilebar .btn{flex:1;justify-content:center;padding:12px 10px;font-size:.92rem}
 
-  /* ---------- to bach story ---------- */
-  .story{background:var(--slate-900);color:#c3c6cf}
-  .story .wrap{display:grid;grid-template-columns:.9fr 1.1fr;gap:64px;align-items:center}
-  .story h2{color:var(--paper);font-size:clamp(1.9rem,3.2vw,2.5rem);font-weight:800;margin-bottom:20px}
-  .story .eyebrow{color:var(--gorse)}
-  .story p{max-width:52ch}
-  .story p + p{margin-top:16px}
-  .story em{font-style:normal;color:var(--gorse)}
-  .glyph{font-family:var(--display);font-weight:800;font-size:clamp(7rem,16vw,12rem);color:var(--paper);line-height:.9;text-align:center}
-  .glyph small{display:block;font-family:var(--mono);font-weight:400;font-size:.8rem;letter-spacing:.14em;color:var(--muted);margin-top:18px;text-transform:uppercase}
-  .glyph .hat{color:var(--gorse)}
-
   /* ---------- steps ---------- */
   .steps{display:grid;grid-template-columns:repeat(4,1fr);gap:26px;counter-reset:step}
   .step{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:28px 26px;position:relative}
@@ -292,7 +280,7 @@
   footer nav a:hover{color:var(--gorse)}
 
   @media (max-width:920px){
-    .hero .wrap,.story .wrap,.area .wrap{grid-template-columns:1fr;gap:44px;padding-top:64px;padding-bottom:96px}
+    .hero .wrap,.area .wrap{grid-template-columns:1fr;gap:44px;padding-top:64px;padding-bottom:96px}
     .props,.quotes{grid-template-columns:1fr;max-width:480px;margin:0 auto}
     .steps,.promise{grid-template-columns:1fr 1fr}
     .nav ul li:not(.keep){display:none}
@@ -499,18 +487,6 @@
         </div>
       </article>
       <p class="no-results" id="no-results" data-en="No houses match those filters for 2026/27 — register below for 2027/28 alerts, or message us: groups change all the time." data-cy="Dim tai yn cyfateb — cofrestrwch isod ar gyfer 2027/28, neu anfonwch neges atom.">No houses match those filters for 2026/27 — register below for 2027/28 alerts, or message us: groups change all the time.</p>
-    </div>
-  </div>
-</section>
-
-<section class="story">
-  <div class="wrap">
-    <div class="glyph reveal" aria-hidden="true">t<span class="hat">ŷ</span><small>/ tee / — house</small></div>
-    <div class="reveal">
-      <p class="eyebrow" data-en="Why “tŷ”?" data-cy="Pam “tŷ”?">Why “tŷ”?</p>
-      <h2 data-en="A little roof over every letter" data-cy="To bach dros bob llythyren">A little roof over every letter</h2>
-      <p><em>Tŷ</em> is the Welsh word for house — and in Welsh, the accent over the ŷ is called a <em>to bach</em>: literally, a little roof. We liked that. It's what we do — we put good roofs over students' heads, and we sweat the little things underneath them.</p>
-      <p data-en="We're not a chain and we're not a call centre. We're local, Rent Smart Wales accredited, and every house we let is one we'd be happy to live in ourselves." data-cy="Nid cadwyn ydyn ni, ac nid canolfan alwadau chwaith. Rydyn ni'n lleol, wedi'n hachredu gan Rhentu Doeth Cymru, a byddem yn hapus i fyw ym mhob tŷ rydym yn ei osod.">We're not a chain and we're not a call centre. We're local, Rent Smart Wales accredited, and every house we let is one we'd be happy to live in ourselves.</p>
     </div>
   </div>
 </section>
