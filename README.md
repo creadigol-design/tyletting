@@ -46,8 +46,22 @@ A complete redesign with a new brand identity and richer functionality:
   "little roof", used as the brand's roof motif throughout
 - Distinctive slate and olive-gold (`#CDC053`) palette, Rokkitt display type
 - Bilingual English / Cymraeg toggle (working demo on key content)
-- Filterable property grid (by number of bedrooms) with amenity chips and
-  360° tour placeholders
+- Benchmarked against leading UK letting/student-accommodation sites
+  (incl. the big national brands and Bangor's largest student-housing provider):
+  - Search-first hero: bedrooms + per-person budget + academic year quick search
+  - Per-person weekly pricing, bills-package and EPC chips on every listing
+  - Live availability badges ("Available 2026/27" / "Let for 2026/27") with an
+    availability filter and price sorting
+  - Video tour / 360° labels on every listing (virtual-viewing parity)
+  - Trust bar: Rent Smart Wales licence, DPS deposit protection, Gas Safe/EPC,
+    HMO licensing, no admin fees
+  - Aggregate review pill (4.9★ Google) positioned against the sub-3★ Trustpilot
+    averages of the big national brands
+  - "The tŷ promise" service guarantees (24/7 emergency line, 3-day repairs,
+    protected deposits)
+  - 2027/28 property-alerts email capture and a sticky mobile action bar
+    (WhatsApp / book a viewing)
+- Filterable property grid (by number of bedrooms) with amenity chips
 - Brand story, student "how it works" journey, area guide with illustrated map,
   testimonials, and a real-questions FAQ
 - Scroll animations and hover micro-interactions (respecting reduced-motion)
